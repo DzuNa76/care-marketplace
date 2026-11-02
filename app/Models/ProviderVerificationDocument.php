@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Enums\ProviderDocumentType;
 
 class ProviderVerificationDocument extends Model
 {
@@ -13,17 +14,13 @@ class ProviderVerificationDocument extends Model
         'document_number',
         'file_path',
         'original_filename',
-        'status',
-        'submitted_at',
-        'reviewed_by',
-        'reviewed_at',
-        'rejection_reason',
         'expires_at',
     ];
 
     protected function casts(): array
     {
         return [
+            'document_type' => ProviderDocumentType::class,
             'submitted_at' => 'datetime',
             'reviewed_at' => 'datetime',
             'expires_at' => 'date',

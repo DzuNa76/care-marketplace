@@ -45,4 +45,9 @@ class ProviderProfile extends Model
     {
         return $this->hasMany(ProviderService::class);
     }
+
+    public function verificationDocuments(): HasMany
+    {
+        return $this->hasMany(ProviderVerificationDocument::class);
+    }
 }

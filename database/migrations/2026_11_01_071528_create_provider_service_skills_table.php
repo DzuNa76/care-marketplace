@@ -6,20 +6,28 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('provider_service_skills', function (Blueprint $table) {
             $table->id();
+
+            $table->foreignId('provider_service_id')
+                ->constrained('provider_services')
+                ->restrictOnDelete();
+
+            $table->foreignId('skill_id')
+                ->constrained('skills')
+                ->restrictOnDelete();
+
             $table->timestamps();
+
+            $table->unique(
+                ['provider_service_id', 'skill_id'],
+                'provider_service_skills_unique'
+            );
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('provider_service_skills');

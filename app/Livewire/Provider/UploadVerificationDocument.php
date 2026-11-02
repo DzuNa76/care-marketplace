@@ -20,6 +20,15 @@ class UploadVerificationDocument extends Component
 
     public $documentFile;
 
+    public function mount(): void
+    {
+        abort_unless(
+            Auth::user()?->providerProfile,
+            403,
+            'Profil provider belum tersedia.'
+        );
+    }
+
     public function saveDocument(): void
     {
         $user = Auth::user();

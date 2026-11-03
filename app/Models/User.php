@@ -44,3 +44,14 @@ class User extends Authenticatable implements FilamentUser
         return $this->hasOne(ProviderProfile::class);
     }
 }
+
+// Akun Customer
+// Nama	Customer Test
+// Email	customer.test@caremarketplace.local
+// Role	customer
+// Password	CustomerTest123!
+
+// Akun Provider
+// Nama	Provider Test
+// Email	provider.test@caremarketplace.local
+// Password	    CareTest!2026Local

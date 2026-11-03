@@ -3,6 +3,7 @@
 use App\Http\Controllers\DashboardController;
 use App\Livewire\Provider\UploadVerificationDocument;
 use Illuminate\Support\Facades\Route;
+use App\Livewire\Provider\EditProfile;
 
 Route::get('/', function () {
     return view('welcome');
@@ -26,4 +27,9 @@ Route::middleware('auth')->group(function () {
             UploadVerificationDocument::class
         )->name('provider.verification-documents');
     });
+
+    Route::livewire(
+        '/provider/profile/edit',
+        EditProfile::class
+    )->name('provider.profile.edit');
 });

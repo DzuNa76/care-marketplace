@@ -9,17 +9,10 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class ProviderProfile extends Model
 {
     protected $fillable = [
-        'user_id',
         'display_name',
         'phone',
         'bio',
         'experience_years',
-        'profile_photo_path',
-        'verification_status',
-        'verification_submitted_at',
-        'reviewed_at',
-        'reviewed_by',
-        'rejection_reason',
     ];
 
     protected function casts(): array

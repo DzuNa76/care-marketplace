@@ -39,6 +39,10 @@
                 <p class="mt-2 text-sm text-gray-500">
                     Kelola informasi dan profil layanan Anda.
                 </p>
+                <a href="{{ route('provider.profile.edit') }}"
+                    class="mt-4 inline-block rounded-lg bg-blue-700 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-800">
+                    Edit Profil
+                </a>
             </div>
 
             <div class="rounded-xl bg-white p-6 shadow-sm">

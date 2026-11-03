@@ -9,6 +9,7 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\File;
+use Illuminate\Support\Facades\Storage;
 
 class UploadVerificationDocument extends Component
 {
@@ -89,22 +90,42 @@ class UploadVerificationDocument extends Component
             );
         }
 
-        $filePath = $this->documentFile->store(
-            $providerProfile->id . '/' . $documentType->value,
-            'provider_documents'
-        );
+        $filePath = null;
 
-        $document = new ProviderVerificationDocument();
+        try {
+            $filePath = $this->documentFile->store(
+                $providerProfile->id . '/' . $documentType->value,
+                'provider_documents'
+            );
 
-        $document->provider_profile_id = $providerProfile->id;
-        $document->document_type = $documentType;
-        $document->document_number = $validated['documentNumber'] ?? null;
-        $document->file_path = $filePath;
-        $document->original_filename = $this->documentFile->getClientOriginalName();
-        $document->status = 'pending';
-        $document->submitted_at = now();
+            $document = new ProviderVerificationDocument();
 
-        $document->save();
+            $document->provider_profile_id = $providerProfile->id;
+            $document->document_type = $documentType;
+            $document->document_number = $validated['documentNumber'] ?? null;
+            $document->file_path = $filePath;
+            $document->original_filename = basename(
+                $this->documentFile->getClientOriginalName()
+            );
+            $document->status = 'pending';
+            $document->submitted_at = now();
+
+            $document->save();
+
+        } catch (\Throwable $exception) {
+            if ($filePath) {
+                Storage::disk('provider_documents')->delete($filePath);
+            }
+
+            report($exception);
+
+            $this->addError(
+                'documentFile',
+                'Dokumen gagal disimpan. Silakan coba kembali.'
+            );
+
+            return;
+        }
 
         $this->reset([
             'documentType',

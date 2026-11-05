@@ -1,9 +1,9 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Livewire\Provider\EditProfile;
 use App\Livewire\Provider\UploadVerificationDocument;
 use Illuminate\Support\Facades\Route;
-use App\Livewire\Provider\EditProfile;
 
 Route::get('/', function () {
     return view('welcome');
@@ -22,14 +22,24 @@ Route::middleware('auth')->group(function () {
         Route::view('/provider/dashboard', 'provider.dashboard')
             ->name('provider.dashboard');
 
-        Route::get(
+        Route::livewire(
+                '/provider/services',
+                'provider.my-services'
+            )->name('provider.services.index');
+
+        Route::livewire(
+                '/provider/services/create',
+                'provider.create-service'
+            )->name('provider.services.create');
+
+        Route::livewire(
             '/provider/verification-documents',
             UploadVerificationDocument::class
         )->name('provider.verification-documents');
-    });
 
-    Route::livewire(
-        '/provider/profile/edit',
-        EditProfile::class
-    )->name('provider.profile.edit');
+        Route::livewire(
+            '/provider/profile/edit',
+            EditProfile::class
+        )->name('provider.profile.edit');
+    });
 });

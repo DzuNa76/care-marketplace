@@ -19,17 +19,17 @@ Platform dirancang menggunakan arsitektur Laravel Modular Monolith agar pengemba
 
 ## 2. Teknologi
 
-| Teknologi | Keterangan |
-|---|---|
-| PHP 8.5 | Backend |
-| Laravel 13 | Framework utama |
-| MySQL | Database |
-| Filament 5 | Dashboard administrator |
-| Livewire 4 | Antarmuka interaktif |
-| Blade | Template frontend |
-| Spatie Laravel Permission | Role dan permission |
-| Composer | Dependency manager PHP |
-| Node.js & NPM | Dependency frontend |
+| Teknologi                 | Keterangan              |
+| ------------------------- | ----------------------- |
+| PHP 8.5                   | Backend                 |
+| Laravel 13                | Framework utama         |
+| MySQL                     | Database                |
+| Filament 5                | Dashboard administrator |
+| Livewire 4                | Antarmuka interaktif    |
+| Blade                     | Template frontend       |
+| Spatie Laravel Permission | Role dan permission     |
+| Composer                  | Dependency manager PHP  |
+| Node.js & NPM             | Dependency frontend     |
 
 ## 3. Fitur dan Progres
 
@@ -298,7 +298,7 @@ README ini akan diperbarui seiring perkembangan fitur dan perubahan struktur apl
 
 ---
 
-*Care Marketplace — Connecting People with Trusted Care Services.*
+_Care Marketplace — Connecting People with Trusted Care Services._
 
 ## License
 

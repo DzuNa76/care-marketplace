@@ -126,6 +126,14 @@ new class extends Component
 
                         {{ $service->prices->count() }} paket
                     </div>
+                    <div class="mt-4 flex justify-end">
+                        <a
+                            href="{{ route('provider.services.edit', $service->id) }}"
+                            class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+                        >
+                            Edit Layanan
+                        </a>
+                    </div>
                 </div>
             @empty
                 <div class="rounded-lg bg-gray-50 p-8 text-center">

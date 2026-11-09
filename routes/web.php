@@ -32,6 +32,11 @@ Route::middleware('auth')->group(function () {
                 'provider.create-service'
             )->name('provider.services.create');
 
+            Route::livewire(
+                '/provider/services/{service}/edit',
+                'provider.edit-service'
+            )->name('provider.services.edit');
+
         Route::livewire(
             '/provider/verification-documents',
             UploadVerificationDocument::class

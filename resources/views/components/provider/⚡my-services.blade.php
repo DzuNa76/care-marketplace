@@ -29,6 +29,26 @@ new class extends Component
             ->get();
     }
 
+    public function toggleStatus(int $serviceId): void
+    {
+        $providerProfile = Auth::user()->providerProfile;
+
+        abort_unless($providerProfile, 403);
+
+        $service = ProviderService::query()
+            ->where('provider_profile_id', $providerProfile->id)
+            ->findOrFail($serviceId);
+
+        $service->update([
+            'is_active' => ! $service->is_active,
+        ]);
+
+        session()->flash(
+            'success',
+            'Status layanan berhasil diperbarui.'
+        );
+    }
+
     public function render()
     {
         return view('components.provider.⚡my-services');

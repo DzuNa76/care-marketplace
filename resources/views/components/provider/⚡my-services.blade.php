@@ -126,7 +126,14 @@ new class extends Component
 
                         {{ $service->prices->count() }} paket
                     </div>
-                    <div class="mt-4 flex justify-end">
+                    <div class="mt-4 flex flex-wrap gap-2">
+                        <a
+                            href="{{ route('provider.services.prices.index', $service->id) }}"
+                            class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+                        >
+                            Kelola Paket Harga
+                        </a>
+
                         <a
                             href="{{ route('provider.services.edit', $service->id) }}"
                             class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"

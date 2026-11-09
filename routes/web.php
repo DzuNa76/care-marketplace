@@ -32,10 +32,30 @@ Route::middleware('auth')->group(function () {
                 'provider.create-service'
             )->name('provider.services.create');
 
-            Route::livewire(
+        Route::livewire(
                 '/provider/services/{service}/edit',
                 'provider.edit-service'
             )->name('provider.services.edit');
+
+        Route::livewire(
+            '/provider/services/{service}/prices',
+            'provider.manage-service-prices'
+        )->name('provider.services.prices.index');
+
+        Route::livewire(
+            '/provider/services/{service}/prices/create',
+            'provider.create-service-price'
+        )->name('provider.services.prices.create');
+
+        Route::livewire(
+            '/provider/services/{service}/prices/create',
+            'provider.create-service-price'
+        )->name('provider.services.prices.create');
+
+        Route::livewire(
+            '/provider/services/{service}/prices/{price}/edit',
+            'provider.edit-service-price'
+        )->name('provider.services.prices.edit');
 
         Route::livewire(
             '/provider/verification-documents',

@@ -2,8 +2,8 @@
 
 namespace App\Filament\Resources\ProviderVerificationDocuments;
 
-use App\Filament\Resources\ProviderVerificationDocuments\Pages\CreateProviderVerificationDocument;
-use App\Filament\Resources\ProviderVerificationDocuments\Pages\EditProviderVerificationDocument;
+// use App\Filament\Resources\ProviderVerificationDocuments\Pages\CreateProviderVerificationDocument;
+// use App\Filament\Resources\ProviderVerificationDocuments\Pages\EditProviderVerificationDocument;
 use App\Filament\Resources\ProviderVerificationDocuments\Pages\ListProviderVerificationDocuments;
 use App\Filament\Resources\ProviderVerificationDocuments\Pages\ViewProviderVerificationDocument;
 use App\Filament\Resources\ProviderVerificationDocuments\Schemas\ProviderVerificationDocumentForm;
@@ -50,9 +50,9 @@ class ProviderVerificationDocumentResource extends Resource
     {
         return [
             'index' => ListProviderVerificationDocuments::route('/'),
-            'create' => CreateProviderVerificationDocument::route('/create'),
+            // 'create' => CreateProviderVerificationDocument::route('/create'),
             'view' => ViewProviderVerificationDocument::route('/{record}'),
-            'edit' => EditProviderVerificationDocument::route('/{record}/edit'),
+            // 'edit' => EditProviderVerificationDocument::route('/{record}/edit'),
         ];
     }
 }

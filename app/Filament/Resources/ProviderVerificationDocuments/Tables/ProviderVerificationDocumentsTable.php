@@ -2,11 +2,10 @@
 
 namespace App\Filament\Resources\ProviderVerificationDocuments\Tables;
 
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use Filament\Actions\EditAction;
+use App\Enums\ProviderDocumentType;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 
 class ProviderVerificationDocumentsTable
@@ -15,51 +14,68 @@ class ProviderVerificationDocumentsTable
     {
         return $table
             ->columns([
-                TextColumn::make('providerProfile.id')
+                TextColumn::make('providerProfile.user.name')
+                    ->label('Nama Provider')
                     ->searchable(),
+
                 TextColumn::make('document_type')
-                    ->badge()
-                    ->searchable(),
+                    ->label('Jenis Dokumen')
+                    ->formatStateUsing(
+                        fn ($state) => $state instanceof ProviderDocumentType
+                            ? $state->label()
+                            : $state
+                    )
+                    ->badge(),
+
                 TextColumn::make('document_number')
-                    ->searchable(),
-                TextColumn::make('file_path')
-                    ->searchable(),
+                    ->label('Nomor Dokumen')
+                    ->placeholder('-'),
+
                 TextColumn::make('original_filename')
+                    ->label('Nama File')
                     ->searchable(),
+
                 TextColumn::make('status')
-                    ->searchable(),
+                    ->label('Status')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'pending' => 'warning',
+                        'approved' => 'success',
+                        'rejected' => 'danger',
+                        default => 'gray',
+                    }),
+
                 TextColumn::make('submitted_at')
-                    ->dateTime()
+                    ->label('Tanggal Pengajuan')
+                    ->dateTime('d M Y H:i')
                     ->sortable(),
-                TextColumn::make('reviewed_by')
-                    ->numeric()
-                    ->sortable(),
+
+                TextColumn::make('reviewer.name')
+                    ->label('Diperiksa Oleh')
+                    ->placeholder('-'),
+
                 TextColumn::make('reviewed_at')
-                    ->dateTime()
+                    ->label('Tanggal Pemeriksaan')
+                    ->dateTime('d M Y H:i')
+                    ->placeholder('-')
                     ->sortable(),
+
                 TextColumn::make('expires_at')
-                    ->date()
-                    ->sortable(),
-                TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->label('Tanggal Kedaluwarsa')
+                    ->date('d M Y')
+                    ->placeholder('-'),
             ])
             ->filters([
-                //
+                SelectFilter::make('status')
+                    ->label('Status')
+                    ->options([
+                        'pending' => 'Menunggu',
+                        'approved' => 'Disetujui',
+                        'rejected' => 'Ditolak',
+                    ]),
             ])
             ->recordActions([
                 ViewAction::make(),
-                EditAction::make(),
-            ])
-            ->toolbarActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
-                ]),
             ]);
     }
 }

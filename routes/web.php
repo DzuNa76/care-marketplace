@@ -4,6 +4,8 @@ use App\Http\Controllers\DashboardController;
 use App\Livewire\Provider\EditProfile;
 use App\Livewire\Provider\UploadVerificationDocument;
 use Illuminate\Support\Facades\Route;
+use App\Models\ProviderVerificationDocument;
+use Illuminate\Support\Facades\Storage;
 
 Route::get('/', function () {
     return view('welcome');
@@ -68,3 +70,22 @@ Route::middleware('auth')->group(function () {
         )->name('provider.profile.edit');
     });
 });
+
+Route::get(
+    '/admin/provider-verification-documents/{document}/preview',
+    function (ProviderVerificationDocument $document) {
+        abort_unless(
+            Storage::disk('provider_documents')->exists($document->file_path),
+            404
+        );
+
+        return response()->file(
+            Storage::disk('provider_documents')->path($document->file_path),
+            [
+                'Content-Disposition' => 'inline; filename="' .
+                    basename($document->original_filename) . '"',
+            ]
+        );
+    }
+)->middleware(['auth', 'role:admin'])
+    ->name('admin.provider-verification-documents.preview');

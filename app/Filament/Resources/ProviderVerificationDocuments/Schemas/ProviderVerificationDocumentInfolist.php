@@ -75,17 +75,17 @@ class ProviderVerificationDocumentInfolist
                             ->state(fn ($record) => in_array(
                                 strtolower(pathinfo($record->original_filename, PATHINFO_EXTENSION)),
                                 ['jpg', 'jpeg', 'png']
-                            ) ? route('admin.provider-verification-documents.preview', $record) : null)
+                            ) ? route('admin.provider-verification-documents.file', $record) : null)
                             ->imageWidth('100%')
                             ->imageHeight('auto')
                             ->extraImgAttributes([
-                                'class' => 'w-full h-auto max-h-[75vh] object-contain rounded-xl',
+                                'class' => 'w-full h-auto max-h-[560px] object-contain rounded-xl mx-auto',
+                                'style' => 'max-height: min(65vh, 560px);',
                             ])
                             ->url(fn ($record) => route(
                                 'admin.provider-verification-documents.preview',
                                 $record
-                            ))
-                            ->openUrlInNewTab(),
+                            )),
 
                         TextEntry::make('file_path')
                             ->label('Dokumen PDF')

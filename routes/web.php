@@ -71,8 +71,43 @@ Route::middleware('auth')->group(function () {
     });
 });
 
+
+// Halaman preview dokumen
 Route::get(
     '/admin/provider-verification-documents/{document}/preview',
+    function (ProviderVerificationDocument $document) {
+        abort_unless(
+            Storage::disk('provider_documents')->exists($document->file_path),
+            404
+        );
+
+        $extension = strtolower(
+            pathinfo($document->original_filename, PATHINFO_EXTENSION)
+        );
+
+        abort_unless(
+            in_array($extension, ['jpg', 'jpeg', 'png']),
+            404
+        );
+
+        return view('admin.provider-verification-documents.preview', [
+            'imageUrl' => route(
+                'admin.provider-verification-documents.file',
+                $document
+            ),
+            'backUrl' => \App\Filament\Resources\ProviderVerificationDocuments\ProviderVerificationDocumentResource::getUrl(
+                'view',
+                ['record' => $document]
+            ),
+        ]);
+    }
+)->middleware(['auth', 'role:admin'])
+    ->name('admin.provider-verification-documents.preview');
+
+
+// File gambar asli
+Route::get(
+    '/admin/provider-verification-documents/{document}/file',
     function (ProviderVerificationDocument $document) {
         abort_unless(
             Storage::disk('provider_documents')->exists($document->file_path),
@@ -88,4 +123,4 @@ Route::get(
         );
     }
 )->middleware(['auth', 'role:admin'])
-    ->name('admin.provider-verification-documents.preview');
+    ->name('admin.provider-verification-documents.file');

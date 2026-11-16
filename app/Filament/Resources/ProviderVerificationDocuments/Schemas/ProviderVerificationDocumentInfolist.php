@@ -72,28 +72,15 @@ class ProviderVerificationDocumentInfolist
                 Section::make('Preview Dokumen')
                     ->schema([
                         // Preview gambar
-                        ImageEntry::make('file_path')
+                        ViewEntry::make('file_path')
                             ->hiddenLabel()
-                            ->state(fn ($record) => in_array(
-                                strtolower(pathinfo($record->original_filename, PATHINFO_EXTENSION)),
-                                ['jpg', 'jpeg', 'png']
-                            ) ? route('admin.provider-verification-documents.file', $record) : null)
-                            ->imageWidth('100%')
-                            ->imageHeight('auto')
-                            ->extraImgAttributes([
-                                'class' => 'w-full h-auto max-h-[560px] object-contain rounded-xl mx-auto',
-                                'style' => 'max-height: min(65vh, 560px);',
-                            ])
-                            ->url(fn ($record) => route(
-                                'admin.provider-verification-documents.preview',
-                                $record
-                            ))
+                            ->view('filament.resources.provider-verification-documents.image-preview')
                             ->visible(fn ($record) => in_array(
                                 strtolower(pathinfo($record->original_filename, PATHINFO_EXTENSION)),
                                 ['jpg', 'jpeg', 'png']
                             )),
 
-                        // Preview PDF langsung di halaman
+                        // Preview PDF
                         ViewEntry::make('file_path')
                             ->hiddenLabel()
                             ->view('filament.resources.provider-verification-documents.pdf-preview')

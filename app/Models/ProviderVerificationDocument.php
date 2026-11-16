@@ -15,6 +15,10 @@ class ProviderVerificationDocument extends Model
         'file_path',
         'original_filename',
         'expires_at',
+        'status',
+        'reviewed_by',
+        'reviewed_at',
+        'rejection_reason',
     ];
 
     protected function casts(): array

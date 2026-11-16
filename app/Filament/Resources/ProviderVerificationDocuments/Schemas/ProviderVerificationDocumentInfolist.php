@@ -7,6 +7,7 @@ use Filament\Infolists\Components\ImageEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use Filament\Infolists\Components\ViewEntry;
 
 class ProviderVerificationDocumentInfolist
 {
@@ -70,6 +71,7 @@ class ProviderVerificationDocumentInfolist
 
                 Section::make('Preview Dokumen')
                     ->schema([
+                        // Preview gambar
                         ImageEntry::make('file_path')
                             ->hiddenLabel()
                             ->state(fn ($record) => in_array(
@@ -85,16 +87,16 @@ class ProviderVerificationDocumentInfolist
                             ->url(fn ($record) => route(
                                 'admin.provider-verification-documents.preview',
                                 $record
+                            ))
+                            ->visible(fn ($record) => in_array(
+                                strtolower(pathinfo($record->original_filename, PATHINFO_EXTENSION)),
+                                ['jpg', 'jpeg', 'png']
                             )),
 
-                        TextEntry::make('file_path')
-                            ->label('Dokumen PDF')
-                            ->formatStateUsing(fn () => 'Buka dokumen PDF')
-                            ->url(fn ($record) => route(
-                                'admin.provider-verification-documents.preview',
-                                $record
-                            ))
-                            ->openUrlInNewTab()
+                        // Preview PDF langsung di halaman
+                        ViewEntry::make('file_path')
+                            ->hiddenLabel()
+                            ->view('filament.resources.provider-verification-documents.pdf-preview')
                             ->visible(fn ($record) => strtolower(
                                 pathinfo($record->original_filename, PATHINFO_EXTENSION)
                             ) === 'pdf'),

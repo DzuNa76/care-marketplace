@@ -30,6 +30,11 @@ class UploadVerificationDocument extends Component
         );
     }
 
+    public function updatedDocumentFile(): void
+    {
+        $this->resetValidation('documentFile');
+    }
+
     public function saveDocument(): void
     {
         $user = Auth::user();

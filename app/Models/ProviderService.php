@@ -50,4 +50,26 @@ class ProviderService extends Model
             'skill_id'
         )->withTimestamps();
     }
+
+    /**
+     * Memeriksa apakah layanan boleh ditampilkan kepada customer.
+     */
+    public function canBeShownToCustomers(): bool
+    {
+        // Layanan harus diaktifkan oleh provider.
+        if (! $this->is_active) {
+            return false;
+        }
+
+        // Pastikan kategori dan profil provider tersedia.
+        $categorySlug = $this->category?->slug;
+        $providerProfile = $this->providerProfile;
+
+        if (! $categorySlug || ! $providerProfile) {
+            return false;
+        }
+
+        // Pastikan dokumen wajib kategori sudah terverifikasi.
+        return $providerProfile->isVerifiedForCategory($categorySlug);
+    }
 }

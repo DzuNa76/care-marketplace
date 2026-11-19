@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Enums\ProviderDocumentType;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class ProviderVerificationDocument extends Model
 {
@@ -39,5 +40,13 @@ class ProviderVerificationDocument extends Model
     public function reviewer(): BelongsTo
     {
         return $this->belongsTo(User::class, 'reviewed_by');
+    }
+
+    public function logs(): HasMany
+    {
+        return $this->hasMany(
+            ProviderVerificationLog::class,
+            'provider_verification_document_id'
+        )->orderBy('created_at');
     }
 }
